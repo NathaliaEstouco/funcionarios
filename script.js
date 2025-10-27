@@ -1,70 +1,28 @@
-class Funcionario {
-  constructor(nome, idade, cargo, salario) {
-    this.nome = nome;
-    this.idade = idade;
-    this.cargo = cargo;
-    this.salario = salario;
-  }
+const funcionarios = [
+  { nome: "Ana", idade: 30, cargo: "Dev", salario: 6000 },
+  { nome: "João", idade: 25, cargo: "Designer", salario: 4000 },
+  { nome: "Maria", idade: 35, cargo: "Gerente", salario: 8000 },
+  { nome: "Pedro", idade: 28, cargo: "Dev", salario: 5500 }
+];
 
-  atualizar = (nome, idade, cargo, salario) => {
-    this.nome = nome;
-    this.idade = idade;
-    this.cargo = cargo;
-    this.salario = salario;
-  };
+const resultado = document.getElementById("resultado");
+
+function relatorioSalarios() {
+  const lista = funcionarios.filter(f => f.salario > 5000);
+  resultado.textContent = JSON.stringify(lista, null, 2);
 }
 
-const funcionarios = [];
+function mediaSalarial() {
+  const media = funcionarios.reduce((soma, f) => soma + f.salario, 0) / funcionarios.length;
+  resultado.textContent = `Média Salarial: R$ ${media.toFixed(2)}`;
+}
 
-const form = document.getElementById("formFuncionario");
-const corpo = document.getElementById("tabelaFuncionarios");
-const nomeInput = document.getElementById("nome");
-const idadeInput = document.getElementById("idade");
-const cargoInput = document.getElementById("cargo");
-const salarioInput = document.getElementById("salario");
-const indiceEdicao = document.getElementById("indiceEdicao");
+function cargosUnicos() {
+  const cargos = [...new Set(funcionarios.map(f => f.cargo))];
+  resultado.textContent = "Cargos únicos: " + cargos.join(", ");
+}
 
-form.addEventListener("submit", e => {
-  e.preventDefault();
-  const nome = nomeInput.value;
-  const idade = idadeInput.value;
-  const cargo = cargoInput.value;
-  const salario = salarioInput.value;
-  const indice = indiceEdicao.value;
-
-  indice === ""
-    ? funcionarios.push(new Funcionario(nome, idade, cargo, salario))
-    : funcionarios[indice].atualizar(nome, idade, cargo, salario);
-
-  indiceEdicao.value = "";
-  atualizarTabela();
-  form.reset();
-});
-
-const atualizarTabela = () => {
-  corpo.innerHTML = "";
-  funcionarios.forEach((f, i) => {
-    corpo.innerHTML += `
-      <tr>
-        <td>${f.nome}</td><td>${f.idade}</td><td>${f.cargo}</td><td>${f.salario}</td>
-        <td>
-          <button onclick="editar(${i})">Editar</button>
-          <button onclick="excluir(${i})">Excluir</button>
-        </td>
-      </tr>`;
-  });
-};
-
-window.editar = i => {
-  const f = funcionarios[i];
-  nomeInput.value = f.nome;
-  idadeInput.value = f.idade;
-  cargoInput.value = f.cargo;
-  salarioInput.value = f.salario;
-  indiceEdicao.value = i;
-};
-
-window.excluir = i => {
-  funcionarios.splice(i, 1);
-  atualizarTabela();
-};
+function nomesMaiusculo() {
+  const nomes = funcionarios.map(f => f.nome.toUpperCase());
+  resultado.textContent = "Nomes: " + nomes.join(", ");
+}
