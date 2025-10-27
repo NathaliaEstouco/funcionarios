@@ -2,27 +2,25 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Exercício 1 - Cadastro de Funcionários</title>
+  <title>Exercício 2 - Editar e Excluir Funcionários</title>
 </head>
 <body>
-  <h1>Cadastro de Funcionários</h1>
+  <h1>Gerenciar Funcionários</h1>
 
   <form id="formFuncionario">
+    <input type="hidden" id="indiceEdicao">
     <label>Nome: <input type="text" id="nome" required></label><br><br>
     <label>Idade: <input type="number" id="idade" required></label><br><br>
     <label>Cargo: <input type="text" id="cargo" required></label><br><br>
     <label>Salário: <input type="number" id="salario" required></label><br><br>
-    <button type="submit">Cadastrar</button>
+    <button type="submit">Salvar</button>
   </form>
 
-  <h2>Lista de Funcionários</h2>
+  <h2>Lista</h2>
   <table border="1">
     <thead>
       <tr>
-        <th>Nome</th>
-        <th>Idade</th>
-        <th>Cargo</th>
-        <th>Salário</th>
+        <th>Nome</th><th>Idade</th><th>Cargo</th><th>Salário</th><th>Ações</th>
       </tr>
     </thead>
     <tbody id="tabelaFuncionarios"></tbody>
