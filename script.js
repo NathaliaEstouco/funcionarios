@@ -6,17 +6,25 @@ class Funcionario {
     this.salario = salario;
   }
 
-  atualizar(nome, idade, cargo, salario) {
+  atualizar = (nome, idade, cargo, salario) => {
     this.nome = nome;
     this.idade = idade;
     this.cargo = cargo;
     this.salario = salario;
-  }
+  };
 }
 
 const funcionarios = [];
 
-document.getElementById("formFuncionario").addEventListener("submit", function(e) {
+const form = document.getElementById("formFuncionario");
+const corpo = document.getElementById("tabelaFuncionarios");
+const nomeInput = document.getElementById("nome");
+const idadeInput = document.getElementById("idade");
+const cargoInput = document.getElementById("cargo");
+const salarioInput = document.getElementById("salario");
+const indiceEdicao = document.getElementById("indiceEdicao");
+
+form.addEventListener("submit", e => {
   e.preventDefault();
   const nome = nomeInput.value;
   const idade = idadeInput.value;
@@ -24,21 +32,17 @@ document.getElementById("formFuncionario").addEventListener("submit", function(e
   const salario = salarioInput.value;
   const indice = indiceEdicao.value;
 
-  if (indice === "") {
-    funcionarios.push(new Funcionario(nome, idade, cargo, salario));
-  } else {
-    funcionarios[indice].atualizar(nome, idade, cargo, salario);
-    indiceEdicao.value = "";
-  }
+  indice === ""
+    ? funcionarios.push(new Funcionario(nome, idade, cargo, salario))
+    : funcionarios[indice].atualizar(nome, idade, cargo, salario);
 
+  indiceEdicao.value = "";
   atualizarTabela();
-  this.reset();
+  form.reset();
 });
 
-function atualizarTabela() {
-  const corpo = document.getElementById("tabelaFuncionarios");
+const atualizarTabela = () => {
   corpo.innerHTML = "";
-
   funcionarios.forEach((f, i) => {
     corpo.innerHTML += `
       <tr>
@@ -49,24 +53,18 @@ function atualizarTabela() {
         </td>
       </tr>`;
   });
-}
+};
 
-function editar(i) {
+window.editar = i => {
   const f = funcionarios[i];
   nomeInput.value = f.nome;
   idadeInput.value = f.idade;
   cargoInput.value = f.cargo;
   salarioInput.value = f.salario;
   indiceEdicao.value = i;
-}
+};
 
-function excluir(i) {
+window.excluir = i => {
   funcionarios.splice(i, 1);
   atualizarTabela();
-}
-
-const nomeInput = document.getElementById("nome");
-const idadeInput = document.getElementById("idade");
-const cargoInput = document.getElementById("cargo");
-const salarioInput = document.getElementById("salario");
-const indiceEdicao = document.getElementById("indiceEdicao");
+};
