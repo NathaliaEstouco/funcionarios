@@ -1,11 +1,10 @@
-# Usar uma imagem base do Nginx
-FROM nginx:alpine
+# Etapa base: usar imagem leve do Nginx
+FROM nginx:stable-alpine
 
-# Copiar todos os arquivos do projeto para o diretório do Nginx
+# Copia seus arquivos HTML, CSS e JS para a pasta pública do Nginx
 COPY . /usr/share/nginx/html
 
-# Expor a porta 8082 (porta interna do container)
-EXPOSE 8082
+# Expõe a porta padrão do Nginx
+EXPOSE 80
 
-# Rodar o Nginx com configuração para usar a porta 8081
-CMD ["nginx", "-g", "daemon off;"]
+# O Nginx inicia automaticamente ao rodar o container

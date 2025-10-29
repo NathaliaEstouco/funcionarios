@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    container_name: gestao_funcionarios
+    ports:
+      - "8090:80"   # 🚀 acessível em http://localhost:8090
+    volumes:
+      - .:/usr/share/nginx/html   # modo desenvolvimento (hot reload)
+    restart: unless-stopped
